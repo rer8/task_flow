@@ -16,7 +16,7 @@ Authentication — login, register, profile management
 
 DB Structure
 
-https://github.com/rer8/task_flow/blob/develop/docs/db_structure.png
+![Скріншот](https://github.com/rer8/task_flow/blob/develop/docs/db_structure.png)
 
 Setup
 uv pip install -r requirements.txt
