@@ -1,0 +1,20 @@
+{% extends "tasks/base.html" %}
+{% block title %}Delete {{ obj_type }}{% endblock %}
+{% block page_title %}Delete {{ obj_type }}{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-5">
+    <div class="card" style="border-color:rgba(239,68,68,.3)">
+      <div class="card-header" style="color:#f87171"><i class="bi bi-trash me-2"></i>Delete {{ obj_type }}</div>
+      <div class="card-body p-4 text-center">
+        <p>Delete <strong>"{{ obj }}"</strong>? This cannot be undone.</p>
+        <form method="post" class="d-flex gap-2 justify-content-center">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">Delete</button>
+          <a href="javascript:history.back()" class="btn btn-outline-secondary">Cancel</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
