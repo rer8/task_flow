@@ -3,3 +3,4 @@
 venv
 **/__pycache__/
 pyproject.toml
+db.sqlite3
