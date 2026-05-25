@@ -25,7 +25,7 @@ uv run python manage.py createsuperuser
 uv run python manage.py runserver
 
 Demo Credentials
-root:admin pass:admin123
+root:admin pass:admin1234
 
 Tech Stack
 Backend: Django 6, SQLite
