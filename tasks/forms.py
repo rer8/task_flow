@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import Task, Worker, Tag, TaskType, Position
+from tasks.models import Task, Worker, Tag, TaskType, Position
 
 
 class TaskForm(forms.ModelForm):
