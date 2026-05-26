@@ -1,0 +1,22 @@
+{% extends "tasks/base.html" %}
+{% block title %}Delete Account{% endblock %}
+{% block page_title %}Delete Account{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card" style="border-color:rgba(239,68,68,.3)">
+      <div class="card-header" style="color:#f87171"><i class="bi bi-trash me-2"></i>Delete Account</div>
+      <div class="card-body p-4 text-center">
+        <div style="font-size:3rem;color:#ef4444;margin-bottom:1rem"><i class="bi bi-exclamation-triangle"></i></div>
+        <h5>Delete account for "{{ worker.get_full_name|default:worker.username }}"?</h5>
+        <p style="color:#71717a;margin-bottom:1.5rem">This action cannot be undone.</p>
+        <form method="post" class="d-flex gap-2 justify-content-center">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">Yes, Delete</button>
+          <a href="{% url 'tasks:worker_detail' worker.pk %}" class="btn btn-outline-secondary">Cancel</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

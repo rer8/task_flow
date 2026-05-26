@@ -1,0 +1,26 @@
+{% extends "tasks/base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block page_title %}{{ title }}{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-5">
+    <div class="card">
+      <div class="card-header">{{ title }}</div>
+      <div class="card-body p-4">
+        <form method="post">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label class="form-label">Name *</label>
+            {{ form.name }}
+            {% for e in form.name.errors %}<div class="text-danger" style="font-size:.8rem">{{ e }}</div>{% endfor %}
+          </div>
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg me-1"></i>Save</button>
+            <a href="javascript:history.back()" class="btn btn-outline-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

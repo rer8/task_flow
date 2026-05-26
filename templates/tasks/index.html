@@ -1,0 +1,114 @@
+{% extends "tasks/base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block content %}
+<div class="row g-3 mb-4">
+  <div class="col-6 col-lg-3">
+    <div class="stat-card">
+      <div class="stat-icon" style="background:rgba(124,58,237,.15);color:#a855f7"><i class="bi bi-list-check"></i></div>
+      <div class="stat-value">{{ total_tasks }}</div>
+      <div class="stat-label">Total Tasks</div>
+    </div>
+  </div>
+  <div class="col-6 col-lg-3">
+    <div class="stat-card">
+      <div class="stat-icon" style="background:rgba(34,197,94,.15);color:#22c55e"><i class="bi bi-check-circle"></i></div>
+      <div class="stat-value" style="color:#22c55e">{{ completed_tasks }}</div>
+      <div class="stat-label">Completed</div>
+    </div>
+  </div>
+  <div class="col-6 col-lg-3">
+    <div class="stat-card">
+      <div class="stat-icon" style="background:rgba(245,158,11,.15);color:#f59e0b"><i class="bi bi-hourglass-split"></i></div>
+      <div class="stat-value" style="color:#f59e0b">{{ pending_tasks }}</div>
+      <div class="stat-label">Pending</div>
+    </div>
+  </div>
+  <div class="col-6 col-lg-3">
+    <div class="stat-card">
+      <div class="stat-icon" style="background:rgba(239,68,68,.15);color:#ef4444"><i class="bi bi-exclamation-circle"></i></div>
+      <div class="stat-value" style="color:#ef4444">{{ overdue_tasks }}</div>
+      <div class="stat-label">Overdue</div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-3">
+  <div class="col-lg-7">
+    <div class="card h-100">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-clock-history me-2 text-purple"></i>Recent Tasks</span>
+        <a href="{% url 'tasks:task_list' %}" class="btn btn-sm btn-outline-primary">View all</a>
+      </div>
+      <div class="table-responsive">
+        <table class="table mb-0">
+          <thead><tr><th>Task</th><th>Priority</th><th>Status</th><th>Deadline</th></tr></thead>
+          <tbody>
+          {% for task in recent_tasks %}
+          <tr>
+            <td>
+              <a href="{% url 'tasks:task_detail' task.pk %}" style="color:#e4e4e7;text-decoration:none;font-weight:600">{{ task.name }}</a>
+              {% if task.task_type %}<div style="font-size:.72rem;color:#71717a">{{ task.task_type }}</div>{% endif %}
+            </td>
+            <td><span class="badge priority-{{ task.priority }}" style="border-radius:20px;font-size:.7rem;padding:.3em .75em">{{ task.get_priority_display }}</span></td>
+            <td>
+              {% if task.is_completed %}
+                <span class="status-dot status-completed"></span> <span style="font-size:.8rem;color:#22c55e">Done</span>
+              {% elif task.is_overdue %}
+                <span class="status-dot status-overdue"></span> <span style="font-size:.8rem;color:#ef4444">Overdue</span>
+              {% else %}
+                <span class="status-dot status-pending"></span> <span style="font-size:.8rem;color:#f59e0b">Active</span>
+              {% endif %}
+            </td>
+            <td style="font-size:.8rem;color:#71717a;font-family:'JetBrains Mono',monospace">{% if task.deadline %}{{ task.deadline|date:"M d, Y" }}{% else %}—{% endif %}</td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="4" class="text-center py-4" style="color:#71717a">No tasks yet. <a href="{% url 'tasks:task_create' %}">Create one!</a></td></tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-5">
+    <div class="card h-100">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-person-check me-2"></i>My Pending Tasks</span>
+        <a href="{% url 'tasks:worker_detail' request.user.pk %}" class="btn btn-sm btn-outline-primary">My profile</a>
+      </div>
+      <div class="card-body p-0">
+        {% for task in my_tasks %}
+        <div class="d-flex align-items-center gap-3 px-4 py-3" style="border-bottom:1px solid rgba(255,255,255,.06)">
+          <a href="{% url 'tasks:task_toggle' task.pk %}?next=tasks:index" class="btn btn-sm" style="width:28px;height:28px;padding:0;display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,.15);border-radius:6px;color:#71717a;flex-shrink:0" title="Mark complete"><i class="bi bi-check"></i></a>
+          <div class="flex-grow-1 min-w-0">
+            <a href="{% url 'tasks:task_detail' task.pk %}" style="color:#e4e4e7;text-decoration:none;font-weight:600;font-size:.875rem;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ task.name }}</a>
+            {% if task.deadline %}<div style="font-size:.72rem;color:{% if task.is_overdue %}#f87171{% else %}#71717a{% endif%};font-family:'JetBrains Mono',monospace">{{ task.deadline|date:"M d" }}</div>{% endif %}
+          </div>
+          <span class="badge priority-{{ task.priority }}" style="border-radius:20px;font-size:.65rem;padding:.25em .6em;flex-shrink:0">{{ task.get_priority_display }}</span>
+        </div>
+        {% empty %}
+        <div class="text-center py-5" style="color:#71717a">
+          <i class="bi bi-check-circle" style="font-size:2rem;display:block;margin-bottom:.5rem;color:#22c55e"></i>
+          All caught up!
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-3 mt-1">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header"><i class="bi bi-lightning me-2 text-warning"></i>Quick Actions</div>
+      <div class="card-body d-flex flex-wrap gap-2">
+        <a href="{% url 'tasks:task_create' %}" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i>New Task</a>
+        <a href="{% url 'tasks:worker_list' %}" class="btn btn-outline-secondary"><i class="bi bi-people me-1"></i>Team ({{ workers_count }})</a>
+        <a href="{% url 'tasks:tag_create' %}" class="btn btn-outline-secondary"><i class="bi bi-tag me-1"></i>New Tag</a>
+        <a href="{% url 'tasks:task_type_create' %}" class="btn btn-outline-secondary"><i class="bi bi-folder-plus me-1"></i>New Task Type</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
