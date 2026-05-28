@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,7 +25,6 @@ SECRET_KEY = os.environ.get(
     "DJANGO_SECRET_KEY",
     default="django-insecure-+966y%hdmed*il4b(8ragbb!27xhc(ixe=j$laz)d$nxlfy88+",  # no 'django-insecure-' prefix
 )
-
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DJANGO_DEBUG", "") != "False" #not IS_RENDER
@@ -74,17 +73,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'task_flow.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 
 
 # Password validation
