@@ -18,11 +18,15 @@ DB Structure
 
 ![Скріншот](https://github.com/rer8/task_flow/blob/develop/docs/db_structure.png)
 
-Setup
-uv pip install -r requirements.txt
-uv run python manage.py migrate
-uv run python manage.py createsuperuser
-uv run python manage.py runserver
+
+## Setup
+
+```bash
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver
+```
 
 Demo Credentials
 root:admin pass:admin1234
