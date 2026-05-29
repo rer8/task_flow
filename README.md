@@ -3,7 +3,23 @@
 TaskFlow - IT teams Task Manager
 A Django-based task management system for IT teams. Inspired by Trello/ClickUp, built as a portfolio project.
 
-Features
+
+DB Structure
+
+![Скріншот](https://github.com/rer8/task_flow/blob/develop/docs/db_structure.png)
+
+
+## Setup
+
+```bash
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver
+```
+
+## Features
+
 Dashboard - overview stats, recent tasks, my pending tasks
 Task Management - create, assign, prioritize, and complete tasks
 Team Management - workers with positions, per-worker task stats (completed vs pending)
@@ -14,20 +30,10 @@ Search & Filter - filter tasks by name, priority, and completion status
 Overdue detection - visual indicators for tasks past their deadline
 Authentication - login, register, profile management
 
-DB Structure
-
-![Скріншот](https://github.com/rer8/task_flow/blob/develop/docs/db_structure.png)
-
-Setup
-uv pip install -r requirements.txt
-uv run python manage.py migrate
-uv run python manage.py createsuperuser
-uv run python manage.py runserver
-
 Demo Credentials
 root:admin pass:admin1234
 
-Tech Stack
+# TechStack
 Backend: Django 6, SQLite
 Frontend: Bootstrap 5.3, Bootstrap Icons
 Fonts: Syne + JetBrains Mono
